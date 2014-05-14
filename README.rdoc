@@ -1,28 +1,92 @@
-== README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+What is this project?
+  This is a webpage that store sentences in cantonese with their translation in
+  english and romanization. In the future I would like to add audio.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Why this project?
+  The reason why I want to storage this sentecens in internet is because I want
+  to create a memrise.com course for cantonese, since all the courses focuses
+  in learn cantonese characteres instead whole sentences.
+
+Where do I got the sentences?
+  In http://tatoeba.org/eng you can find a lot of sentences with their
+  traductions, you can download the files:
+
+    http://tatoeba.org/files/downloads/sentences.csv
+    This file contains: id \t language \t sentence
+    we are only interesed in languages "eng" or "yue" (cantonese).
+
+    http://tatoeba.org/files/downloads/links.csv
+    This file contains: id1 \t id2
+    this links is the relations of the translations, so in this file we will
+    find the how to connect the different senteces to others in other languages.
+
+Migrate from files to our own database.
+  We are going to use Postgress (cause is supported in heroku)
+  in the file methods.Java you can find all the files we have use to make the
+  migrations. Lets explain the steps:
+    1- Load all the sentences in our db:
+      Create the table sentences (firs you have to create a db call cantonese).
+        CREATE TABLE sentences(
+          id integer,
+          language varchar(3),
+          sentence varchar(255),
+          PRIMARY KEY(id)
+          );
+          Populate the table with the method: readSentences().
+          Only will insert when the language is eng or yue.
+
+    2- Create the table relations:
+        CREATE TABLE relations(
+        relation1 integer,
+        relation2 integer
+        );
+        Populate it with the method:readRelations().
+        This method only will insert a field if the relations exist both of them
+        in our sentences table, and the first id will be the cantonese and the
+        second id the translate in english.
+
+    3- Create the table cantonese:
+          CREATE TABLE cantonese(
+            id integer,
+            language varchar(3),
+            sentence varchar(255),
+            PRIMARY KEY(id)
+            );
+             Populate it with the method copyCantonese().
+            Firs we need to save all the table relations in a file
+            (with the method writeLinks()), then we will read all the relations
+            and when they exist in the table sentences we will insert them in
+            the cantonese.
+            So we only are going to have in the table cantonese sentences that
+            have english translation. (And the english translations);
+
+    4- Create romanization:
+        Is important to us to have the romanization of the sentences so we know
+        how to read it, for this we have use the method: translateRomanization().
+        It makes a call to http://popupcantonese.com/adso/pinyin.php?text=而家中午,
+        This return the romanization and we will insert it in the table cantonese.
+        As well we will insert the relations in the table.
+
+        We had problems with the codification of the chinese characters, so we
+        develop this method: convertIntoUTF_8(), so we can make the petitions.
+        for example converts this:而家中午 in: %E8%80%8C%E5%AE%B6%E4%B8%AD%E5%8D%88
+
+So far we have in our database 2558 sentences in cantonese, in total with
+translations 8394 and  5865 relations, since heroku only accept 10.000 rows we are
+going to create a new table and migrate all the content.
+  the table is going to be:
+      CREATE TABLE sentences(
+        id_cantonese integer,
+        cantonese varchar(255),
+        id_english integer,
+        english varchar(255),
+        id_romanization integer,
+        romanization varchar(255),
+        cantonese_audio varchar(255)
+        );
+        We add the cantonese_audio just in case, I'm going to create this with
+        scaffold to have all the structure.
+        rails generate scaffold sentence id_cantonese:integer cantonese:string
+        id_english:integer english:string id_romanization:integer romanization:string
+        cantonese_audio:string
