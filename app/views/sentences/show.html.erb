@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id cantonese:</strong>
+  <%= @sentence.id_cantonese %>
+</p>
+
+<p>
+  <strong>Cantonese:</strong>
+  <%= @sentence.cantonese %>
+</p>
+
+<p>
+  <strong>Id english:</strong>
+  <%= @sentence.id_english %>
+</p>
+
+<p>
+  <strong>English:</strong>
+  <%= @sentence.english %>
+</p>
+
+<p>
+  <strong>Id romanization:</strong>
+  <%= @sentence.id_romanization %>
+</p>
+
+<p>
+  <strong>Romanization:</strong>
+  <%= @sentence.romanization %>
+</p>
+
+<p>
+  <strong>Cantonese audio:</strong>
+  <%= @sentence.cantonese_audio %>
+</p>
+
+<%= link_to 'Edit', edit_sentence_path(@sentence) %> |
+<%= link_to 'Back', sentences_path %>

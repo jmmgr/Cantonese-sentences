@@ -1,0 +1,45 @@
+<%= form_for(@sentence) do |f| %>
+  <% if @sentence.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sentence.errors.count, "error") %> prohibited this sentence from being saved:</h2>
+
+      <ul>
+      <% @sentence.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id_cantonese %><br>
+    <%= f.number_field :id_cantonese %>
+  </div>
+  <div class="field">
+    <%= f.label :cantonese %><br>
+    <%= f.text_field :cantonese %>
+  </div>
+  <div class="field">
+    <%= f.label :id_english %><br>
+    <%= f.number_field :id_english %>
+  </div>
+  <div class="field">
+    <%= f.label :english %><br>
+    <%= f.text_field :english %>
+  </div>
+  <div class="field">
+    <%= f.label :id_romanization %><br>
+    <%= f.number_field :id_romanization %>
+  </div>
+  <div class="field">
+    <%= f.label :romanization %><br>
+    <%= f.text_field :romanization %>
+  </div>
+  <div class="field">
+    <%= f.label :cantonese_audio %><br>
+    <%= f.text_field :cantonese_audio %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_cantonese: 1
+  cantonese: MyString
+  id_english: 1
+  english: MyString
+  id_romanization: 1
+  romanization: MyString
+  cantonese_audio: MyString
+
+two:
+  id_cantonese: 1
+  cantonese: MyString
+  id_english: 1
+  english: MyString
+  id_romanization: 1
+  romanization: MyString
+  cantonese_audio: MyString
