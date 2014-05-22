@@ -1,3 +1,5 @@
+You can find all the sentences I already have in: http://cantonese-sentences.herokuapp.com/sentences
+
 What is this project?
   This is a webpage that store sentences in cantonese with their translation in
   english and romanization. In the future I would like to add audio.
@@ -8,7 +10,7 @@ Why this project?
   to create a memrise.com course for cantonese, since all the courses focuses
   in learn cantonese characteres instead whole sentences.
 
-Where do I got the sentences?
+Where did I get the sentences?
   In http://tatoeba.org/eng you can find a lot of sentences with their
   traductions, you can download the files:
 
